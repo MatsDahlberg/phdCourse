@@ -4,7 +4,7 @@ Uses mysql, [tornado](http://www.tornadoweb.org/en/stable/), [bootstrap](http://
 
 Login is done through google_oauth. 
 
-4 variable values should be present in a file named secrets.py:
+4 variable values should be present in a file named ```secrets.py```:
 ```
 googleKey = 
 googleSecret = 
@@ -12,7 +12,7 @@ mysqlUser =
 mysqlPwd =
 ```
 
-In the directory cert there be 2 files:
+In the directory ```cert``` there be 2 files:
 ```
 myserver.key 
 server.crt
