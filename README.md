@@ -33,7 +33,7 @@ The tornado-server offers the following services:
 
 ```
 --Services that require authentification
-/getUsersCourses
+/getUserCourses
 /updateCourse
 /createCourse
 ```
