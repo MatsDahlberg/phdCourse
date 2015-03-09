@@ -68,7 +68,7 @@
 	    { name: 'language', displayName: 'Language', enableCellEdit: true },
 	    { name: 'course_url', displayName: 'URL', enableCellEdit: true }
 	];
-	$http.get('/getUsersCourses').success(function(data){
+	$http.get('/getUserCourses').success(function(data){
 	    localThis.gridOptions.data = data
 	});
 
@@ -112,7 +112,7 @@
 			localThis.sMessage = "";
 		    }, 5000);
 
-		    $http.get('/getUsersCourses').success(function(data){
+		    $http.get('/getUserCourses').success(function(data){
 			localThis.gridOptions.data = data
 		    });
 		    promise.reject();

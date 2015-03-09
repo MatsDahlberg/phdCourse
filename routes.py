@@ -44,7 +44,7 @@ class Application(tornado.web.Application):
             ("/unauthorized", util.UnAuthorizedHandler),
             (r"/getSubjects", application.getSubjects),
             (r"/getCourses", application.getCourses),
-            (r"/getUsersCourses", application.getUsersCourses),
+            (r"/getUserCourses", application.getUserCourses),
             (r"/updateCourse", application.updateCourse),
             (r"/createCourse", application.createCourse),
             (r'.*', util.BaseHandler),

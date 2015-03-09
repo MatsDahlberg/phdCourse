@@ -93,10 +93,10 @@ class createCourse(util.SafeHandler):
                   values ('2011-01-01', '2011-01-01', '2011-01-01', %s, %s)
                """
         db.insert(sSql, tRes[0].pk, tRes[0].pk)
-        self.redirect("/getUsersCourses")
+        self.redirect("/getUserCourses")
         print "Create new course"
 
-class getUsersCourses(util.SafeHandler):
+class getUserCourses(util.SafeHandler):
     def get(self, *args, **kwargs):
         sEmail = self.get_secure_cookie("email")
         self.set_header("Content-Type", "application/json")
