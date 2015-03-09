@@ -1,0 +1,38 @@
+CREATE TABLE `administrators` (
+  `pk` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `university` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`pk`),
+  KEY `email_idx` (`email`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `course` (
+  `pk` int(11) NOT NULL AUTO_INCREMENT,
+  `course_name` varchar(100) DEFAULT NULL,
+  `subject` varchar(60) DEFAULT NULL,
+  `points` float DEFAULT NULL,
+  `date_start` date DEFAULT NULL,
+  `date_end` date DEFAULT NULL,
+  `last_apply_date` date DEFAULT NULL,
+  `course_velocity` int(11) DEFAULT NULL,
+  `university` varchar(100) DEFAULT NULL,
+  `course_url` varchar(200) DEFAULT NULL,
+  `distance_course` varchar(10) DEFAULT NULL,
+  `language` varchar(45) DEFAULT NULL,
+  `last_edit_by` int(11) DEFAULT NULL,
+  `added_by` int(11) DEFAULT NULL,
+  `visible_for_user` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`pk`),
+  KEY `added_by_idx` (`added_by`),
+  KEY `last_apply_date_idx` (`last_apply_date`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `subjects` (
+  `pk` int(11) NOT NULL AUTO_INCREMENT,
+  `subject_name` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`pk`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
