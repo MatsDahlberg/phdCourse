@@ -12,7 +12,7 @@ mysqlUser =
 mysqlPwd =
 ```
 
-In the directory ```cert``` there be 2 files:
+In the directory ```cert``` there should be 2 files:
 ```
 myserver.key 
 server.crt
