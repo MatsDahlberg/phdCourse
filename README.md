@@ -26,14 +26,20 @@ python route.py
 
 The tornado-server offers the following services:
 --Public services
+```
 /getSubjects
 /getCourses
+```
 
 --Services that require authentification
+```
 /getUsersCourses
 /updateCourse
 /createCourse
+```
 
 --Utility services
+```
 /login
 /logout
+```
