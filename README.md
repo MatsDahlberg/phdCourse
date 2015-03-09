@@ -1,3 +1,3 @@
 Database application for handling PhD courses.
 
-Uses mysql, tornado, bootstrap, angularjs and angular-ui/ng-grid
+Uses mysql, [tornado](http://www.tornadoweb.org/en/stable/), [bootstrap](http://getbootstrap.com/), [angularjs](https://angularjs.org/) and [angular-ui/ng-grid](http://ui-grid.info/)
