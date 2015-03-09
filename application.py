@@ -11,11 +11,12 @@ import os, random, string
 import csv
 import re
 import util
+import secrets
 
 db = database.Connection('127.0.0.1',
                          'phd_course',
-                         user='phd_writer',
-                         password='writer')
+                         user=secrets.mysqlUser,
+                         password=secrets.mysqlPwd)
 
 class home(util.UnsafeHandler):
     def get(self, *args, **kwargs):
