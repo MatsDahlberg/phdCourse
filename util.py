@@ -6,14 +6,8 @@ import requests
 import os
 import time
 import torndb as database
-import applicationTemplate
 from datetime import datetime
 import applicationTemplate
-
-db = database.Connection('127.0.0.1',
-                         'vialdb',
-                         user='writer',
-                         password='writer')
 
 def isAuthorized(email):
     tRes = db.query("""select user_name, full_name, organization
