@@ -94,7 +94,8 @@ class createCourse(util.SafeHandler):
                """
         db.insert(sSql, tRes[0].pk, tRes[0].pk)
         self.redirect("/getUserCourses")
-        print "Create new course"
+                logging.info("Create new course")
+
 
 class getUserCourses(util.SafeHandler):
     def get(self, *args, **kwargs):
