@@ -20,7 +20,7 @@ server.crt
 
 To start the application:
 ```
-python route.py
+python routes.py
 ```
 
 
