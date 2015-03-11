@@ -93,8 +93,8 @@ class createCourse(util.SafeHandler):
                   values ('2011-01-01', '2011-01-01', '2011-01-01', %s, %s)
                """
         db.insert(sSql, tRes[0].pk, tRes[0].pk)
+        logging.info("Create new course")
         self.redirect("/getUserCourses")
-                logging.info("Create new course")
 
 
 class getUserCourses(util.SafeHandler):
