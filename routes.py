@@ -18,7 +18,6 @@ logging.getLogger().setLevel(logging.DEBUG)
 redirect_uri = "https://phdcoursedb.scilifelab.se:8080/login"
 
 # Setup the Tornado Application
-#cookie_secret = 'dlfijUNkjhk65567nhljhkjhNK67nmnHJGFJLIu'
 cookie_secret = base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
 settings = {"debug": True,
             "cookie_secret": cookie_secret,
