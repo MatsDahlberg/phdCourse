@@ -8,9 +8,15 @@ import time
 import torndb as database
 from datetime import datetime
 import applicationTemplate
+import secrets
+import logging
 
+db = database.Connection('127.0.0.1',
+                         'phd_course',
+                         user=secrets.mysqlUser,
+                         password=secrets.mysqlPwd)
 def isAuthorized(email):
-    tRes = db.query("""select user_name, full_name, organization
+    tRes = db.query("""select user_name, university
                        from phd_course.administrators where email = '%s'""" % (email))
     if len(tRes)>0:
         return True, tRes[0]
@@ -48,7 +54,7 @@ class BaseHandler(tornado.web.RequestHandler):
         http://tornado.readthedocs.org/en/latest/web.html#tornado.web.RequestHandler.write_error
         """
         reason = 'Page not found'
-        print "Error do something here"
+        logging.info("Error do something here")
 
 class GoogleUser(object):
     """Stores the information that google returns from a user throuhgh its secured API.
@@ -103,9 +109,8 @@ class LoginHandler(tornado.web.RequestHandler, tornado.auth.GoogleOAuth2Mixin):
                 code=self.get_argument('code')
                 )
             user = GoogleUser(user_token)
-            #print user.display_name
-            #print user.emails
-            
+            logging.info(user.display_name)
+
             (lAuthorized, saUser) = isAuthorized(user.emails[0])
             if user.authenticated and lAuthorized:
                 self.set_secure_cookie('user', user.display_name)
@@ -116,8 +121,7 @@ class LoginHandler(tornado.web.RequestHandler, tornado.auth.GoogleOAuth2Mixin):
                 if url is None:
                     url = '/'
             else:
-                url = "/unauthorized?email={0}&contact={1}".format(user.emails[0],
-                        self.application.settings['contact_person'])
+                url = '/'
             self.redirect(url)
 
         else:

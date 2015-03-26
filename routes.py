@@ -15,11 +15,11 @@ import secrets
 tornado.log.enable_pretty_logging()
 logging.getLogger().setLevel(logging.DEBUG)
 
-redirect_uri = "https://esox2.scilifelab.se:8084/login"
+redirect_uri = "https://phdcoursedb.scilifelab.se:8080/login"
 
 # Setup the Tornado Application
-cookie_secret = 'dlfijUNkjhk65567nhljhkjhNK67nmnHJGFJLIu'
-#cookie_secret = base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
+#cookie_secret = 'dlfijUNkjhk65567nhljhkjhNK67nmnHJGFJLIu'
+cookie_secret = base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
 settings = {"debug": True,
             "cookie_secret": cookie_secret,
             "login_url": "/login",
@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
     # Start HTTP Server
     http_server = tornado.httpserver.HTTPServer(application, ssl_options = ssl_options)
-    http_server.listen(8084)
+    http_server.listen(8080)
     
     # Get a handle to the instance of IOLoop
     ioloop = tornado.ioloop.IOLoop.instance()
