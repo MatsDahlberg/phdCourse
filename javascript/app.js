@@ -31,7 +31,7 @@
 	    { name: 'distance_course', displayName: 'Distance course', width:90, enableCellEdit: false },
 	    { name: 'university', displayName: 'University (equiv)', width:110, enableCellEdit: false },
 	    { name: 'language', displayName: 'Language', width:90, enableCellEdit: false },
-	    { name: 'course_url', displayName: 'URL', width:85, cellTemplate: '<a href={{row.entity.course_url}}>Course info</a>' , enableCellEdit: false }
+	    { name: 'course_url', displayName: 'URL', width:85, cellTemplate: '<a href={{row.entity.course_url}} target="_blank">Course info</a>' , enableCellEdit: false }
 	];
 	this.gridOptions.enableFiltering = true;
 	var localThis = this;

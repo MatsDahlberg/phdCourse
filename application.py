@@ -96,9 +96,9 @@ class createCourse(util.SafeHandler):
         logging.info("Create new course")
         self.redirect("/getUserCourses")
 
-
 class getUserCourses(util.SafeHandler):
     def get(self, *args, **kwargs):
+        self.set_header("Cache-control", "no-cache")
         sEmail = self.get_secure_cookie("email")
         self.set_header("Content-Type", "application/json")
         tRes = db.query("""SELECT c.pk, course_name, subject, points, date_start, date_end, last_apply_date,
@@ -128,6 +128,7 @@ class getUserCourses(util.SafeHandler):
 
 class getCourses(util.UnsafeHandler):
     def get(self, *args, **kwargs):
+        self.set_header("Cache-control", "no-cache")
         self.set_header("Content-Type", "application/json")
         tRes = db.query("""SELECT pk, course_name, subject, points, date_start, date_end, last_apply_date,
                            course_velocity, university, course_url, distance_course, language
