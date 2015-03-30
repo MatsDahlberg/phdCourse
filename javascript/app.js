@@ -9,10 +9,6 @@
 	$http.get('/getSubjects').success(function(data){
 	    gData.subjects = data
 	});
-	
-	$http.get('/getCourses').success(function(data){
-	    localThis.gridOptions.data = data
-	});
     });
 
     /////////////////////////////////////////////////////////////////////////////////////
