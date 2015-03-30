@@ -135,6 +135,8 @@ class LoginHandler(tornado.web.RequestHandler, tornado.auth.GoogleOAuth2Mixin):
 
 class LogoutHandler(tornado.web.RequestHandler, tornado.auth.GoogleMixin):
     def get(self):
+        self.clear_cookie("login_redirect")
+        self.set_secure_cookie('login_redirect', self.get_argument("next", '/'), 1)
         self.clear_cookie("user")
         self.clear_cookie("email")
         self.redirect("/")

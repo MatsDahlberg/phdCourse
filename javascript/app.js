@@ -10,6 +10,9 @@
 	    gData.subjects = data
 	});
 	
+	$http.get('/getCourses').success(function(data){
+	    localThis.gridOptions.data = data
+	});
     });
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -65,7 +68,14 @@
 		  { id: 2, distance_course: 'No' }
 	      ]},
 	    { name: 'university', displayName: 'University (equiv)', enableCellEdit: true },
-	    { name: 'language', displayName: 'Language', enableCellEdit: true },
+	    { name: 'language', displayName: 'Language', enableCellEdit: true,
+	      editableCellTemplate: 'ui-grid/dropdownEditor',
+	      editDropdownValueLabel: 'language',
+	      editDropdownIdLabel: 'language',
+	      editDropdownOptionsArray: [
+		  { id: 1, language: 'English' },
+		  { id: 2, language: 'Swedish' }
+	      ]},
 	    { name: 'course_url', displayName: 'URL', enableCellEdit: true }
 	];
 	$http.get('/getUserCourses').success(function(data){

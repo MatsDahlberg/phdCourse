@@ -131,7 +131,7 @@ class getCourses(util.UnsafeHandler):
         self.set_header("Content-Type", "application/json")
         tRes = db.query("""SELECT pk, course_name, subject, points, date_start, date_end, last_apply_date,
                            course_velocity, university, course_url, distance_course, language
-                           from phd_course.course where last_apply_date > now()
+                           from phd_course.course where date_start > now()
                            order by pk""")
         def makeJson(tData):
             jRes = list()
