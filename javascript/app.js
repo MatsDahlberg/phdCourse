@@ -124,7 +124,6 @@
 	};
 	
 	this.saveRow = function( rowEntity ) {
-	    //console.log("Saving vial " + rowEntity.vialId +  ' ' + rowEntity.coordinate);
 	    var promise = $q.defer();
 	    localThis.gridApi.rowEdit.setSavePromise(rowEntity, promise.promise);
 	    
