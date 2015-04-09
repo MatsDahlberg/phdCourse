@@ -110,9 +110,9 @@ class LoginHandler(tornado.web.RequestHandler, tornado.auth.GoogleOAuth2Mixin):
                 )
             user = GoogleUser(user_token)
             logging.info(user.display_name)
-
             (lAuthorized, saUser) = isAuthorized(user.emails[0])
             if user.authenticated and lAuthorized:
+                self.set_secure_cookie('access_token', user_token['access_token'])
                 self.set_secure_cookie('user', user.display_name)
                 #It will have at least one email (otherwise she couldn't log in)
                 self.set_secure_cookie('email', user.emails[0])
@@ -135,6 +135,18 @@ class LoginHandler(tornado.web.RequestHandler, tornado.auth.GoogleOAuth2Mixin):
 
 class LogoutHandler(tornado.web.RequestHandler, tornado.auth.GoogleMixin):
     def get(self):
+        def handle_request(response):
+            if response.error:
+                logging.info("Error, failed in logout")
+            else:
+                logging.info("User logged out")
+
+        sAccessToken = self.get_secure_cookie("access_token")
+        sLogoutUrl = "https://accounts.google.com/o/oauth2/revoke?token=" + str(sAccessToken)
+        http_client = tornado.httpclient.AsyncHTTPClient()
+        http_client.fetch(sLogoutUrl, handle_request)
+
+        self.clear_cookie("access_token")
         self.clear_cookie("login_redirect")
         self.set_secure_cookie('login_redirect', self.get_argument("next", '/'), 1)
         self.clear_cookie("user")

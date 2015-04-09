@@ -1,10 +1,15 @@
 (function() {
     // create the module and name it App
-    var App = angular.module('App', ['ngRoute', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.resizeColumns']);
+    var App = angular.module('App', ['ngRoute', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.resizeColumns', 'ui.grid.cellNav'])
+	.run(function($rootScope) {
+	    $rootScope.deleteRow = function() {
+		console.log("kalle")
+            };
+	});
     var gData = {}
     /////////////////////////////////////////////////////////////////////////////////////
 
-    App.controller('mainController', function($http) {
+    App.controller('mainController', function($http, $scope) {
 	var localThis = this;
 	$http.get('/getSubjects').success(function(data){
 	    gData.subjects = data
@@ -40,6 +45,8 @@
 
     App.controller('editCoursesController', function($scope, $http, $q, $timeout) {
 	var localThis = this;
+	localThis.buttonDisable = true;
+	localThis.sPk = null;
 	this.gridOptions = {rowEditWaitInterval: 20};
  	this.gridOptions.columnDefs = [
 	    { name: 'email', enableCellEdit: false, visible:false },
@@ -84,6 +91,38 @@
 	    });
 	};
 
+	this.deleteCourse = function() {
+	    var promise = $q.defer();
+	    var selectedRow = localThis.gridApi.cellNav.getFocusedCell();
+	    var sPk = selectedRow.row.entity.pk;
+	    
+	    $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+	    $http({url:'/deleteCourse',
+		   method:'POST',
+		   data:$.param({'pk':sPk})
+		  })
+		.success(function(data){
+		    localThis.buttonDisable = true;
+		    localThis.sPk = null;
+		    localThis.sMsg = '';
+
+		    localThis.gridOptions.data = data;
+		    promise.resolve();
+		})
+		.error(function(data){
+		    // Show error message for 5 sec and then reload the data from server
+		    localThis.sMessage = "Error deleteing course";
+		    $timeout(function() {
+			localThis.sMessage = "";
+		    }, 5000);
+		    
+		    $http.get('/getUserCourses').success(function(data){
+			localThis.gridOptions.data = data
+		    });
+		    promise.reject();
+		});
+	};
+	
 	this.saveRow = function( rowEntity ) {
 	    //console.log("Saving vial " + rowEntity.vialId +  ' ' + rowEntity.coordinate);
 	    var promise = $q.defer();
@@ -125,10 +164,19 @@
 		});
 	};
 	
-	this.gridOptions.onRegisterApi = function(gridApi){
+	localThis.gridOptions.onRegisterApi = function(gridApi){
 	    //set gridApi on scope
 	    localThis.gridApi = gridApi;
 	    gridApi.rowEdit.on.saveRow($scope, localThis.saveRow);
+
+	    gridApi.cellNav.on.navigate($scope, function(newRowCol, oldRowCol){
+		localThis.sMsg = newRowCol.row.entity.course_name + ', ' + newRowCol.row.entity.subject + ', ' + newRowCol.row.entity.date_start
+		localThis.buttonDisable = false;
+		localThis.sPk = newRowCol.row.entity.sPk;
+
+		$scope.$apply();
+		localThis.currentCourse = newRowCol.row.entity.sPk;
+            });
 	};
     });
 

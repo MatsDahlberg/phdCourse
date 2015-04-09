@@ -85,6 +85,19 @@ class updateCourse(util.SafeHandler):
         db.update(sSql, sCourseName, sSubject, sPoints, sDateStart, sDateEnd, sLastApplyDate,
                   sCourseVelocity, sUniversity, sCourseUrl, sDistanceCourse, sLangage, sPk)
 
+class deleteCourse(util.SafeHandler):
+    def post(self, *args, **kwargs):
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header("Cache-control", "no-cache")
+        sPk = self.get_argument("pk", strip=False)
+        
+        tRes = db.query("""select email from phd_course.course c, phd_course.administrators a
+                           where c.added_by = a.pk and c.pk ='%s'""" % (sPk))
+        if len(tRes) == 1 and tRes[0].email == self.get_secure_cookie("email"):
+            db.execute("""delete from phd_course.course where pk ='%s'""" % (sPk))
+
+        self.redirect("/getUserCourses")
+
 class createCourse(util.SafeHandler):
     def post(self, *args, **kwargs):
         tRes = db.query("""select pk from phd_course.administrators where email='%s'"""
