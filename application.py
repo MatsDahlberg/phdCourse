@@ -85,6 +85,42 @@ class updateCourse(util.SafeHandler):
         db.update(sSql, sCourseName, sSubject, sPoints, sDateStart, sDateEnd, sLastApplyDate,
                   sCourseVelocity, sUniversity, sCourseUrl, sDistanceCourse, sLangage, sPk)
 
+class deleteSubject(util.SafeHandler):
+    def post(self, *args, **kwargs):
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header("Cache-control", "no-cache")
+        sSubject = self.get_argument("subject", strip=False)
+        try:
+            db.execute("""delete from phd_course.subjects where subject_name ='%s'""" % (sSubject))
+        except:
+            pass
+
+class createSubject(util.SafeHandler):
+    def post(self, *args, **kwargs):
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header("Cache-control", "no-cache")
+        sSubject = self.get_argument("subject", strip=False)
+        sSql = """insert into phd_course.subjects (subject_name)
+                  values (%s)
+               """
+        try:
+            db.insert(sSql, sSubject)
+        except:
+            pass
+        self.redirect("/getSubjects")
+
+class getDeletableSubjects(util.SafeHandler):
+    def get(self, *args, **kwargs):
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header("Cache-control", "no-cache")
+        tRes = db.query("""SELECT subjects.subject_name as subject
+                           FROM phd_course.subjects
+                           LEFT JOIN phd_course.course 
+                           ON phd_course.course.subject = phd_course.subjects.subject_name
+                           WHERE phd_course.course.subject IS NULL
+                        """)
+        self.write(json.dumps(tRes, indent=4))
+
 class deleteCourse(util.SafeHandler):
     def post(self, *args, **kwargs):
         self.set_header('Access-Control-Allow-Origin', '*')

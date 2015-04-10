@@ -43,6 +43,63 @@
 
     /////////////////////////////////////////////////////////////////////////////////////
 
+    App.controller('editSubjectsController', function($scope, $http) {
+	this.subjectToDelete = "";
+	localThis = this;
+	localThis.sSubject = "";
+	localThis.subjectList = null;
+	localThis.deletableSubjectList = null;
+	localThis.buttonDisable = true;
+
+	$http.get('/getSubjects').success(function(data){
+	    localThis.subjectList = data;
+	});
+
+	$http.get('/getDeletableSubjects').success(function(data){
+	    localThis.deletableSubjectList = data;
+	});
+
+	this.setSubject = function(sSubject) {
+	    localThis.subjectToDelete = sSubject;
+	};
+
+	this.addSubject = function() {
+	    $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+	    $http({url:'/createSubject',
+		   method:'POST',
+		   data:$.param({'subject':localThis.sSubject})
+		  })
+		.success(function(data){
+		    localThis.subjectList = data;
+		    localThis.sSubject = "";
+
+		    $http.get('/getDeletableSubjects').success(function(data){
+			localThis.deletableSubjectList = data;
+		    });
+		});
+	};
+
+	localThis.deleteSubject = function() {
+	    $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+	    $http({url:'/deleteSubject',
+		   method:'POST',
+		   data:$.param({'subject':localThis.subjectToDelete})
+		  })
+		.success(function(data){
+		    localThis.subjectToDelete = "";
+		    $http.get('/getSubjects').success(function(data){
+			localThis.subjectList = data;
+		    });
+		    
+		    $http.get('/getDeletableSubjects').success(function(data){
+			localThis.deletableSubjectList = data;
+		    });
+		});
+	};
+    });
+    
+    /////////////////////////////////////////////////////////////////////////////////////
+
     App.controller('editCoursesController', function($scope, $http, $q, $timeout) {
 	var localThis = this;
 	localThis.buttonDisable = true;
@@ -91,7 +148,7 @@
 	    });
 	};
 
-	this.deleteCourse = function() {
+	this.deleteCourse = function($http, $q) {
 	    var promise = $q.defer();
 	    var selectedRow = localThis.gridApi.cellNav.getFocusedCell();
 	    var sPk = selectedRow.row.entity.pk;
@@ -190,6 +247,9 @@
 	// Edit courses view
 	    .when('/editCourses/', {
 		templateUrl : 'static/editCourses.html'
+	    })
+	    .when('/editSubjects/', {
+		templateUrl : 'static/editSubjects.html'
 	    })
     });
 })();

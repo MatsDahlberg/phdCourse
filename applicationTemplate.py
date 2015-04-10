@@ -41,9 +41,11 @@ indexHtml="""
       </div>
 
       <ul class="nav navbar-nav navbar-right">
-           <a href="/#/editCourses/" role="button" class="btn btn-default">Edit</a>
-           <a href="/#/" role="button" class="btn btn-default">View</a>
-
+           <a href="/#/" role="button" class="btn btn-default">View courses</a>
+           <a href="/#/editCourses/" role="button" class="btn btn-default">Edit courses</a>
+<!--
+-->
+           <a href="/#/editSubjects" role="button" class="btn btn-default">Edit subjects</a>
            &nbsp;
            &nbsp;
            <div class="btn-group navbar-btn">
