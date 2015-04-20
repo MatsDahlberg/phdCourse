@@ -33,6 +33,10 @@ The tornado-server offers the following services:
 
 ```
 --Services that require authentification
+/getDeletableSubjects
+/deleteSubject
+/createSubject
+/deleteCourse
 /getUserCourses
 /updateCourse
 /createCourse
