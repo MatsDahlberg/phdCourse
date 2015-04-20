@@ -205,6 +205,7 @@ class getCourses(util.UnsafeHandler):
 
 class getSubjects(util.UnsafeHandler):
     def get(self, *args, **kwargs):
+        self.set_header("Cache-control", "no-cache")
         tRes = db.query("""SELECT pk as id, subject_name as subject
                            from phd_course.subjects
                            order by pk""")

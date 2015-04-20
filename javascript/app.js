@@ -1,9 +1,10 @@
 (function() {
     // create the module and name it App
-    var App = angular.module('App', ['ngRoute', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.resizeColumns', 'ui.grid.cellNav'])
+    var App = angular.module('App', ['ngRoute', 'ui.grid', 'ui.grid.edit',
+				     'ui.grid.rowEdit', 'ui.grid.resizeColumns', 'ui.grid.cellNav'])
 	.run(function($rootScope) {
 	    $rootScope.deleteRow = function() {
-		console.log("kalle")
+		console.log("deleteRow")
             };
 	});
     var gData = {}
@@ -32,7 +33,8 @@
 	    { name: 'distance_course', displayName: 'Distance course', width:90, enableCellEdit: false },
 	    { name: 'university', displayName: 'University (equiv)', width:110, enableCellEdit: false },
 	    { name: 'language', displayName: 'Language', width:90, enableCellEdit: false },
-	    { name: 'course_url', displayName: 'URL', width:85, cellTemplate: '<a href={{row.entity.course_url}} target="_blank">Course info</a>' , enableCellEdit: false }
+	    { name: 'course_url', displayName: 'URL', width:85,
+	      cellTemplate: '<a href={{row.entity.course_url}} target="_blank">Course info</a>' , enableCellEdit: false }
 	];
 	this.gridOptions.enableFiltering = true;
 	var localThis = this;
@@ -61,6 +63,7 @@
 
 	this.setSubject = function(sSubject) {
 	    localThis.subjectToDelete = sSubject;
+	    localThis.buttonDisable = false;
 	};
 
 	this.addSubject = function() {
@@ -87,6 +90,8 @@
 		  })
 		.success(function(data){
 		    localThis.subjectToDelete = "";
+		    localThis.buttonDisable = true;
+
 		    $http.get('/getSubjects').success(function(data){
 			localThis.subjectList = data;
 		    });
@@ -148,7 +153,7 @@
 	    });
 	};
 
-	this.deleteCourse = function($http, $q) {
+	this.deleteCourse = function() {
 	    var promise = $q.defer();
 	    var selectedRow = localThis.gridApi.cellNav.getFocusedCell();
 	    var sPk = selectedRow.row.entity.pk;
