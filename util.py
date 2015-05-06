@@ -138,6 +138,7 @@ class LogoutHandler(tornado.web.RequestHandler, tornado.auth.GoogleMixin):
         def handle_request(response):
             if response.error:
                 logging.info("Error, failed in logout")
+                logging.info(response.error)
             else:
                 logging.info("User logged out")
 

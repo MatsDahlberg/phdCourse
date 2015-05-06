@@ -24,7 +24,7 @@ settings = {"debug": True,
             "login_url": "/login",
             "google_oauth": {
         "key": secrets.googleKey,
-        "secret": secrets.googleSecret 
+        "secret": secrets.googleSecret
         },
             "contact_person": 'mats.dahlberg@scilifelab.se',
             "redirect_uri": redirect_uri

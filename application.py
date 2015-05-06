@@ -104,7 +104,8 @@ class createSubject(util.SafeHandler):
                   values (%s)
                """
         try:
-            db.insert(sSql, sSubject)
+            if len(sSubject) > 2 :
+                db.insert(sSql, sSubject)
         except:
             pass
         self.redirect("/getSubjects")
