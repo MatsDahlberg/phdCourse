@@ -31,7 +31,7 @@
 	    { name: 'last_apply_date', displayName: 'Reg deadline', width:90, enableCellEdit: false },
 	    { name: 'course_velocity', displayName: 'Tempo (%)', width:80, enableCellEdit: false },
 	    { name: 'distance_course', displayName: 'Distance course', width:90, enableCellEdit: false },
-	    { name: 'university', displayName: 'University (equiv)', width:110, enableCellEdit: false },
+	    { name: 'university', displayName: 'Location', width:110, enableCellEdit: false },
 	    { name: 'language', displayName: 'Language', width:90, enableCellEdit: false },
 	    { name: 'course_url', displayName: 'URL', width:85,
 	      cellTemplate: '<a href={{row.entity.course_url}} target="_blank">Course info</a>' , enableCellEdit: false }
@@ -132,7 +132,7 @@
 		  { id: 1, distance_course: 'Yes' },
 		  { id: 2, distance_course: 'No' }
 	      ]},
-	    { name: 'university', displayName: 'University (equiv)', enableCellEdit: true },
+	    { name: 'university', displayName: 'Location', enableCellEdit: true },
 	    { name: 'language', displayName: 'Language', enableCellEdit: true,
 	      editableCellTemplate: 'ui-grid/dropdownEditor',
 	      editDropdownValueLabel: 'language',
